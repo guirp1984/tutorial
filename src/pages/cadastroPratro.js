@@ -7,6 +7,11 @@ import Col from 'react-bootstrap/Col';
 import '../css/cprato.css';
 import '../css/index.css';
 import React,{Component} from 'react';
+import axios from "axios";
+
+const api = axios.create({
+    baseURL: "https://hackacloud-integration-grkw8ijigw7a-gr.integration.sa-saopaulo-1.ocp.oraclecloud.com/ic/api/integration/v1/flows/rest/"
+})
 
 export default class Food extends Component {
     
@@ -32,8 +37,12 @@ export default class Food extends Component {
             })
         }
 
-        submitForm(){
-                alert(JSON.stringify(this.state));
+        submitForm(e){
+            e.preventDefault();
+
+            api.post('CADASTRA_PRATOS_API/1.0/cadastra-pratos/', this.state).then(res => {
+                console.log(res.data)
+            })
         }
 
     render(){
@@ -46,7 +55,7 @@ export default class Food extends Component {
                     <Form onSubmit={this.submitForm.bind(this)}>
                             <Form.Group controlId="formGridNome">
                             <Form.Label className="details-form">Nome do Prato</Form.Label>
-                            <Form.Control  className="font-forms" type="text" placeholder="Informe o email" value={this.state.nome} onChange={this.changeField.bind(this,'nome')} />
+                            <Form.Control  className="font-forms" type="text" placeholder="Informe o prato" value={this.state.nome} onChange={this.changeField.bind(this,'nome')} />
                             </Form.Group>
 
                         <Form.Group controlId="formGridDescricao">

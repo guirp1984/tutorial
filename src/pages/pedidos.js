@@ -7,21 +7,31 @@ import Col from 'react-bootstrap/Col';
 import '../css/cpedido.css';
 import '../css/index.css';
 import React,{Component} from 'react';
+import axios from "axios";
+
+
+
+const api = axios.create({
+    baseURL: "https://hackacloud-integration-grkw8ijigw7a-gr.integration.sa-saopaulo-1.ocp.oraclecloud.com/ic/api/integration/v1/flows/rest/"
+})
 
 export default class Restaurant extends Component {
     
     constructor(props){
         super(props);
             this.state ={
-                pedido: [{nomePedido:'Bife acebolado',descricaoPedido:'Belo bife acebolado!! Belo bife acebolado!! Belo bife acebolado!! Belo bife acebolado!! Belo bife acebolado!!',nomeRestaurante:'Restaurante 1',tempoMedioPreparo:'33min',preco:'R$: 35,00',img:'https://objectstorage.sa-saopaulo-1.oraclecloud.com/p/Ceqy-Ye8N3S-QGyR5flge0w8r62TBYVFwpkDTpsgi4S15AlWiBuSRb3ZCqQqmHN1/n/oraclemetodista/b/bucket-teste/o/bife-acebolado1.jpg'},
-                {nomePedido:'Bife acebolado',descricaoPedido:'Belo bife acebolado!! Belo bife acebolado!! Belo bife acebolado!! Belo bife acebolado!! Belo bife acebolado!!',nomeRestaurante:'Restaurante 2',tempoMedioPreparo:'33min',preco:'R$: 40,00',img:'https://objectstorage.sa-saopaulo-1.oraclecloud.com/p/du6byfRVaVdKyLlbCZMJmEXqNSKIAkZPlhmKPLVaf_uh4gen_n-lDDx1C8cXnnXW/n/oraclemetodista/b/bucket-teste/o/bife-acebolado2.jpg'},
-                {nomePedido:'Bife acebolado',descricaoPedido:'Belo bife acebolado!! Belo bife acebolado!! Belo bife acebolado!! Belo bife acebolado!! Belo bife acebolado!!',nomeRestaurante:'Restaurante 3',tempoMedioPreparo:'33min',preco:'R$: 80,00',img:'https://objectstorage.sa-saopaulo-1.oraclecloud.com/p/yT0Fsm8BsJllaXoUUD-qVlwxOq9OrqvCCU0p0eWZ90zaSM3YIB-5L3cSIimwKy2Q/n/oraclemetodista/b/bucket-teste/o/bife-acebolado3.jpg'}]
+                pedido: [{nomePedido:'Bife acebolado',descricaoPedido:'',nomeRestaurante:'Restaurante 1',tempoMedioPreparo:'33min',preco:'R$: 35,00',img:'https://objectstorage.sa-saopaulo-1.oraclecloud.com/p/ISmjijbXhPBNg4Ls_pgpUa9vyXbQUllRYPW93zJYKkvaJ_EQrj2hScrLJdMpWtoJ/n/grkw8ijigw7a/b/YouHungry/o/Images/SteakHouse.Carne.png'},
+                {nomePedido:'Bife acebolado',descricaoPedido:'Belo bife acebolado!! Belo bife acebolado!! Belo bife acebolado!! Belo bife acebolado!! Belo bife acebolado!!',nomeRestaurante:'Restaurante 2',tempoMedioPreparo:'33min',preco:'R$: 40,00',img:'https://objectstorage.sa-saopaulo-1.oraclecloud.com/p/ISmjijbXhPBNg4Ls_pgpUa9vyXbQUllRYPW93zJYKkvaJ_EQrj2hScrLJdMpWtoJ/n/grkw8ijigw7a/b/YouHungry/o/Images/Sabores.Brasileiros.Comida.png'},
+                {nomePedido:'Bife acebolado',descricaoPedido:'Belo bife acebolado!! Belo bife acebolado!! Belo bife acebolado!! Belo bife acebolado!! Belo bife acebolado!!',nomeRestaurante:'Restaurante 3',tempoMedioPreparo:'33min',preco:'R$: 80,00',img:'https://objectstorage.sa-saopaulo-1.oraclecloud.com/p/ISmjijbXhPBNg4Ls_pgpUa9vyXbQUllRYPW93zJYKkvaJ_EQrj2hScrLJdMpWtoJ/n/grkw8ijigw7a/b/YouHungry/o/Images/Suway.Natural.png'}]
             }
         }
 
-        submitPedido(e){
+        submitForm(e){
             e.preventDefault();
-                alert(JSON.stringify(this.state.pedido[e.target.value]));
+
+            api.post('pedido/', this.state).then(res => {
+                console.log(res.data)
+            })
         }
 
     render(){

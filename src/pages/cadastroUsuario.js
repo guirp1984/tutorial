@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import '../css/cusuario.css';
 import '../css/index.css';
 import React,{Component} from 'react';
+import axios from "axios";
 
 export default class User extends Component {
     
@@ -31,8 +32,35 @@ export default class User extends Component {
             })
         }
 
-        submitForm(){
-                alert(JSON.stringify(this.state));
+        submitForm(event){
+            event.preventDefault();
+            const url ='https://hackacloud-integration-grkw8ijigw7a-gr.integration.sa-saopaulo-1.ocp.oraclecloud.com/ic/api/integration/v1/flows/rest/USERS_API/1.0/users';
+            const options = {
+              method: 'POST',
+              body: JSON.stringify(this.state),
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            };
+            fetch(url, options)
+              .then(response => {
+                if (response.ok) {
+                  alert('Usuário cadastrado com sucesso!');
+                  this.setState({
+                    email: '',
+                    password: '',
+                    nome:'',
+                    endereco:'',
+                    cidade:'',
+                    cep:''
+                  });
+                } else {
+                  alert('Erro ao cadastrar usuário.');
+                }
+              })
+              .catch(error => {
+                console.error('Erro ao cadastrar usuário:', error);
+              });
         }
 
     render(){
@@ -50,8 +78,8 @@ export default class User extends Component {
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridPassword">
-                            <Form.Label className="details-form">Password</Form.Label>
-                            <Form.Control  className="font-forms" type="password" placeholder="Password" value={this.state.password}  onChange={this.changeField.bind(this,'password')}/>
+                            <Form.Label className="details-form">Senha</Form.Label>
+                            <Form.Control  className="font-forms" type="password" placeholder="Senha" value={this.state.password}  onChange={this.changeField.bind(this,'password')}/>
                             </Form.Group>
                         </Form.Row>
 
@@ -60,8 +88,8 @@ export default class User extends Component {
                             <Form.Control  className="font-forms" placeholder="Informe o nome e o sobrenome" value={this.state.nome} onChange={this.changeField.bind(this,'nome')} />
                         </Form.Group>
 
-                        <Form.Group controlId="formGridendereco">
-                            <Form.Label className="details-form">Enreceço</Form.Label>
+						<Form.Group controlId="formGridendereco">
+                            <Form.Label className="details-form">Endereço</Form.Label>
                             <Form.Control  className="font-forms" placeholder="Informe o endereço" value={this.state.endereco} onChange={this.changeField.bind(this,'endereco')} />
                         </Form.Group>
 
@@ -87,3 +115,4 @@ export default class User extends Component {
   );
 }
 }
+             

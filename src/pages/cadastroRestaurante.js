@@ -7,6 +7,13 @@ import Col from 'react-bootstrap/Col';
 import '../css/crestaurant.css';
 import '../css/index.css';
 import React,{Component} from 'react';
+import axios from "axios";
+
+
+
+const api = axios.create({
+    baseURL: "https://hackacloud-integration-grkw8ijigw7a-gr.integration.sa-saopaulo-1.ocp.oraclecloud.com/ic/api/integration/v1/flows/rest/"
+})
 
 export default class Restaurant extends Component {
     
@@ -32,8 +39,12 @@ export default class Restaurant extends Component {
             })
         }
 
-        submitForm(){
-                alert(JSON.stringify(this.state));
+        submitForm(e){
+            e.preventDefault();
+
+            api.post('RESTAURANTES_API/1.0/cadastrar-restaurantes/', this.state).then(res => {
+                console.log(res.data)
+            })
         }
 
     render(){
@@ -51,14 +62,14 @@ export default class Restaurant extends Component {
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridPassword">
-                            <Form.Label className="details-form">Password</Form.Label>
-                            <Form.Control  className="font-forms" type="password" placeholder="Password" value={this.state.password}  onChange={this.changeField.bind(this,'password')}/>
+                            <Form.Label className="details-form">Senha</Form.Label>
+                            <Form.Control  className="font-forms" type="password" placeholder="Senha" value={this.state.password}  onChange={this.changeField.bind(this,'password')}/>
                             </Form.Group>
                         </Form.Row>
                         <Form.Row>
                         <Form.Group as={Col} controlId="formGridEspecialidade">
-                            <Form.Label className="details-form">Especilidade</Form.Label>
-                            <Form.Control  className="font-forms" placeholder="Informe a especilidade do estabelecimento" value={this.state.especialidade} onChange={this.changeField.bind(this,'especialidade')} />
+                            <Form.Label className="details-form">Especialidade</Form.Label>
+                            <Form.Control  className="font-forms" placeholder="Informe a especialidade do estabelecimento" value={this.state.especialidade} onChange={this.changeField.bind(this,'especialidade')} />
                         </Form.Group>
                         <Form.Group as={Col} controlId="formGridCNPJ">
                             <Form.Label className="details-form">CNPJ do Restaurante</Form.Label>
@@ -66,7 +77,7 @@ export default class Restaurant extends Component {
                         </Form.Group>
                         </Form.Row>
                         <Form.Group controlId="formGridendereco">
-                            <Form.Label className="details-form">Enreceço</Form.Label>
+                            <Form.Label className="details-form">Endereço</Form.Label>
                             <Form.Control  className="font-forms" placeholder="Informe o endereço" value={this.state.endereco} onChange={this.changeField.bind(this,'endereco')} />
                         </Form.Group>
 

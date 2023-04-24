@@ -6,6 +6,7 @@ import Login from '../pages/login.js'
 import Restaurant from '../pages/cadastroRestaurante.js';
 import Prato from '../pages/cadastroPratro.js';
 import Pedido from '../pages/pedidos.js';
+import Menu from '../pages/menu.js';
 
 
 export default function Routes(){
